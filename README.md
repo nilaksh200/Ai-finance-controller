@@ -53,8 +53,8 @@ The application features a 3-tab interactive fintech controller dashboard matchi
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/nilaksh200/RazorPay.git
-cd RazorPay
+git clone https://github.com/nilaksh200/Ai-finance-controller-.git
+cd Ai-finance-controller-
 ```
 
 ### 2. Set Up Virtual Environment & Dependencies
