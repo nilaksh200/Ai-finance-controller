@@ -431,9 +431,6 @@ def _get_run_cloud_models() -> List[Dict[str, str]]:
     return _RUN_CLOUD_MODELS
 
 
-ENGINE_MODE = "cloud"  # Supported options: "cloud" (Gemini/Groq -> Local -> Mock), "local" (Ollama -> Mock), "mock" (Offline)
-
-
 def _load_env_keys() -> None:
     """Helper to ensure .env variables and Streamlit Cloud secrets are loaded into os.environ."""
     try:
