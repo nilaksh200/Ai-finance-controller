@@ -1,0 +1,82 @@
+name: RazorPay AI Finance Controller CI
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    name: Build, Audit & Verify
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Compile and Syntax Check
+        run: |
+          python -m compileall -q .
+
+      - name: Run Autonomous 3-Way Reconciliation Test
+        run: |
+          python -c "
+          from finance_controller import (
+              generate_synthetic_data,
+              load_reconciliation_data,
+              run_deterministic_matcher,
+              run_react_agent,
+              CashPositionController,
+              CashForecaster,
+              compute_accuracy_metrics
+          )
+          
+          # Generate test dataset
+          generate_synthetic_data(seed=42)
+          dataset = load_reconciliation_data('orders.csv', 'gateway.csv', 'bank.csv', 'ground_truth.csv')
+          
+          # Run deterministic matcher
+          det_matches, unmatched_orders, unmatched_gateway, unmatched_bank = run_deterministic_matcher(
+              dataset['orders'], dataset['gateway'], dataset['bank']
+          )
+          assert len(det_matches) > 0, 'Deterministic matcher produced 0 matches'
+          
+          # Run ReAct reasoning loop
+          ai_matches, exceptions = run_react_agent(unmatched_orders, unmatched_gateway, unmatched_bank)
+          assert len(ai_matches) + len(exceptions) > 0, 'ReAct engine produced no results'
+          
+          # Compute accuracy metrics
+          metrics = compute_accuracy_metrics(dataset['ground_truth_map'], det_matches, ai_matches, exceptions)
+          print('CI Audit F1-Score:', metrics['f1_score'])
+          assert metrics['f1_score'] >= 0.85, f'F1 score {metrics[\"f1_score\"]} below threshold'
+          
+          # Verify Cash Position & Forecaster
+          cash_ctrl = CashPositionController(opening_balance=500000.0)
+          cash_stmt = cash_ctrl.update_from_reconciliation(det_matches, ai_matches, exceptions)
+          assert 'closing_balance' in cash_stmt
+          
+          forecaster = CashForecaster(reconciled_data={'all_orders': list(dataset['orders'].values()), 'refunds_count': 0})
+          forecast = forecaster.forecast_7day(current_balance=cash_stmt['closing_balance'], pending_float=cash_stmt['inflows']['pending_settlements'])
+          assert len(forecast) == 7
+          print('CI Verification: All tests and audit pipelines passed successfully!')
+          "
+
+      - name: Verify Streamlit Dashboard Integrity
+        run: |
+          python -c "
+          import dashboard
+          print('Streamlit dashboard loaded successfully!')
+          "
