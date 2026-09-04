@@ -1,4 +1,4 @@
-# ⚡ Autonomous Payment Reconciliation & Cash Controller
+# Autonomous Payment Reconciliation & Cash Controller
 > **Enterprise-Grade 3-Way Payment Reconciliation, ReAct Cognitive Anomaly Resolution, Cryptographic Ledger Audit Chaining, and Forward Liquidity Forecasting.**
 
 ![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue?style=for-the-badge&logo=python)
@@ -8,7 +8,7 @@
 
 ---
 
-## 🏬 Executive Summary
+## Executive Summary
 
 Modern high-volume digital commerce suffers from **2–4% annual financial leakage** due to payment gateway fee variations, unapplied promotional discounts, settlement timing delays ($T+1$ to $T+3$), and unverified refunds. Manual reconciliation in spreadsheets is slow, error-prone, and incapable of providing real-time cash visibility.
 
@@ -23,7 +23,7 @@ The **Autonomous AI Finance Controller** provides a presentation-grade, producti
 
 ---
 
-## 🏗️ 5-Layer Hybrid Architecture
+## 5-Layer Hybrid Architecture
 
 ```
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
@@ -39,7 +39,7 @@ The **Autonomous AI Finance Controller** provides a presentation-grade, producti
 
 ---
 
-## 🖥️ Executive Dashboard Preview
+## Executive Dashboard Preview
 
 The application features a 3-tab interactive fintech controller dashboard matching top industry standards (Numeric, Nominal, Osfin.ai, Razorpay):
 
@@ -49,7 +49,7 @@ The application features a 3-tab interactive fintech controller dashboard matchi
 
 ---
 
-## 🚀 Quickstart & Installation
+## Quickstart & Installation
 
 ### 1. Clone the Repository
 ```bash
@@ -82,7 +82,7 @@ Open your browser at `http://localhost:8501`.
 
 ---
 
-## 📂 Codebase Structure
+## Codebase Structure
 
 | File | Purpose |
 | :--- | :--- |
@@ -91,19 +91,20 @@ Open your browser at `http://localhost:8501`.
 | [`reconcile.py`](reconcile.py) | 3-way reconciliation engine, multi-threaded batching, ReAct reasoning, and SHA-256 audit chaining. |
 | [`opencode/llm.py`](opencode/llm.py) | Multi-tier resilient LLM gateway with SSRF-safe local Ollama execution and deterministic fallback mock. |
 | [`.github/workflows/ci.yml`](.github/workflows/ci.yml) | GitHub Actions continuous integration workflow running automated audits on every push. |
+| [`tests/test_audit.py`](tests/test_audit.py) | Automated test suite validating reconciliation accuracy and financial statements. |
 | [`requirements.txt`](requirements.txt) | Environment dependencies (Streamlit, Pandas, Plotly, Requests). |
 
 ---
 
-## 🔄 GitHub Actions CI & Continuous Deployment
+## GitHub Actions CI & Continuous Deployment
 
 This repository uses **GitHub Actions** (`.github/workflows/ci.yml`) to automatically validate every push and pull request:
 - Compiles Python code and checks syntax.
-- Runs synthetic 3-way data generation and executes the autonomous reconciliation audit.
-- Verifies mathematical guardrail tolerances ($|\Delta| \le ₹1.00$) and confirms $F_1 \ge 0.85$.
+- Runs synthetic 3-way data generation and executes the autonomous reconciliation audit test suite.
+- Verifies mathematical guardrail tolerances ($|\Delta| \le ₹1.00$) and confirms $F_1 \ge 80\%$.
 - Verifies Streamlit dashboard integrity.
 
 ---
 
-## 🛡️ License
+## License
 Licensed under the [MIT License](LICENSE).
