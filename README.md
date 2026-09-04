@@ -1,10 +1,10 @@
 # Autonomous Payment Reconciliation & Cash Controller
 > **Enterprise-Grade 3-Way Payment Reconciliation, ReAct Cognitive Anomaly Resolution, Cryptographic Ledger Audit Chaining, and Forward Liquidity Forecasting.**
 
-![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue?style=for-the-badge&logo=python)
-[![Streamlit Cloud](https://img.shields.io/badge/Live%20Demo-Streamlit%20Cloud-FF4B4B?style=for-the-badge&logo=streamlit)](https://ai-finance-controller-nilaksh.streamlit.app/)
-![AI Reasoning](https://img.shields.io/badge/AI%20Engine-MockLLM%20%7C%20Gemini-4285F4?style=for-the-badge&logo=google)
-![CI Build](https://img.shields.io/badge/CI-Automated%20Audit%20Passing-success?style=for-the-badge&logo=githubactions)
+![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue?style=for-the-badge)
+[![Streamlit Cloud](https://img.shields.io/badge/Live%20Demo-Streamlit%20Cloud-FF4B4B?style=for-the-badge)](https://ai-finance-controller-nilaksh.streamlit.app/)
+![AI Reasoning](https://img.shields.io/badge/AI%20Engine-MockLLM%20%7C%20Gemini-4285F4?style=for-the-badge)
+![CI Build](https://img.shields.io/badge/CI-Automated%20Audit%20Passing-success?style=for-the-badge)
 
 ---
 
@@ -47,16 +47,16 @@ By unifying rule-based deterministic matching, multi-threaded **Google Gemini Re
 In high-volume digital commerce, every transaction exists across three disconnected, asynchronous ledgers:
 
 ```
-┌────────────────────────┐       ┌────────────────────────┐       ┌────────────────────────┐
-│  1. ORDER SYSTEM (OMS) │       │   2. PAYMENT GATEWAY   │       │   3. CORE BANK FEED    │
-│      (orders.csv)      │       │     (gateway.csv)      │       │       (bank.csv)       │
-├────────────────────────┤       ├────────────────────────┤       ├────────────────────────┤
-│ OrderID: ORD101        │  ──►  │ PaymentID: PAY101      │  ──►  │ TransactionID: TXN882  │
-│ Gross Amount: Rs 1,000 │       │ Gross: Rs 1,000        │       │ Date: T+2 Settlement   │
-│ Discount: Rs 0.00      │       │ MDR Fee: Rs 20.00      │       │ Net Deposit: Rs 976.40 │
-│ Status: Completed      │       │ GST (18%): Rs 3.60     │       │ Narration: Settlement  │
-│                        │       │ Net Due: Rs 976.40     │       │                        │
-└────────────────────────┘       └────────────────────────┘       └────────────────────────┘
++------------------------+       +------------------------+       +------------------------+
+|  1. ORDER SYSTEM (OMS) |       |   2. PAYMENT GATEWAY   |       |   3. CORE BANK FEED    |
+|      (orders.csv)      |       |     (gateway.csv)      |       |       (bank.csv)       |
++------------------------+       +------------------------+       +------------------------+
+| OrderID: ORD101        |  -->  | PaymentID: PAY101      |  -->  | TransactionID: TXN882  |
+| Gross Amount: Rs 1,000 |       | Gross: Rs 1,000        |       | Date: T+2 Settlement   |
+| Discount: Rs 0.00      |       | MDR Fee: Rs 20.00      |       | Net Deposit: Rs 976.40 |
+| Status: Completed      |       | GST (18%): Rs 3.60     |       | Narration: Settlement  |
+|                        |       | Net Due: Rs 976.40     |       |                        |
++------------------------+       +------------------------+       +------------------------+
 ```
 
 ### The 5 Causes of Financial Leakage
@@ -71,15 +71,15 @@ In high-volume digital commerce, every transaction exists across three disconnec
 ## 5-Layer Hybrid System Architecture
 
 ```
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                              THE 5-LAYER HYBRID ENGINE                                 │
-├────────────────────────────────────────────────────────────────────────────────────────┤
-│  Layer 1: Deterministic Fast-Path Matcher (Sub-millisecond exact O(1) matching)        │
-│  Layer 1.5: Multi-Threaded ReAct AI Detective (5-in-1 Batched Google Gemini Reasoning) │
-│  Layer 2: Dual-Track Treasury Accounting (Realized Cash vs In-Transit Float)           │
-│  Layer 3: 7-Day Predictive Liquidity Forecaster (Non-linear liquidation curve)         │
-│  Layer 4: Automated Ticket Triage & Closed-Loop ERP Journal Dispatch Studio            │
-└────────────────────────────────────────────────────────────────────────────────────────┘
++----------------------------------------------------------------------------------------+
+|                              THE 5-LAYER HYBRID ENGINE                                 |
++----------------------------------------------------------------------------------------+
+|  Layer 1: Deterministic Fast-Path Matcher (Sub-millisecond exact O(1) matching)        |
+|  Layer 1.5: Multi-Threaded ReAct AI Detective (5-in-1 Batched Google Gemini Reasoning) |
+|  Layer 2: Dual-Track Treasury Accounting (Realized Cash vs In-Transit Float)           |
+|  Layer 3: 7-Day Predictive Liquidity Forecaster (Non-linear liquidation curve)         |
+|  Layer 4: Automated Ticket Triage & Closed-Loop ERP Journal Dispatch Studio            |
++----------------------------------------------------------------------------------------+
 ```
 
 ---
@@ -104,24 +104,24 @@ In high-volume digital commerce, every transaction exists across three disconnec
 Non-standard records failing Layer 1 heuristics are quarantined and escalated to the **ReAct (Reasoning + Acting)** cognitive agent powered by **Google Gemini**.
 
 ```
-┌───────────┐
-│   THINK   │ ──► Analyze gross amount, gateway status, and bank candidate deposits.
-└─────┬─────┘
-      │
-      ▼
-┌───────────┐
-│    ACT    │ ──► Verify candidate TransactionIDs and recalculate effective MDR and GST.
-└─────┬─────┘
-      │
-      ▼
-┌───────────┐
-│  OBSERVE  │ ──► Cross-verify calculated net proceeds against actual bank credit.
-└─────┬─────┘
-      │
-      ▼
-┌───────────┐
-│  DECIDE   │ ──► Emit structured classification (MATCH, FEE_VARIATION, EXCEPTION, REFUND).
-└───────────┘
++-----------+
+|   THINK   | --> Analyze gross amount, gateway status, and bank candidate deposits.
++-----+-----+
+      |
+      |
++-----------+
+|    ACT    | --> Verify candidate TransactionIDs and recalculate effective MDR and GST.
++-----+-----+
+      |
+      |
++-----------+
+|  OBSERVE  | --> Cross-verify calculated net proceeds against actual bank credit.
++-----+-----+
+      |
+      |
++-----------+
+|  DECIDE   | --> Emit structured classification (MATCH, FEE_VARIATION, EXCEPTION, REFUND).
++-----------+
 ```
 
 ### Anomaly Classes Resolved
@@ -179,16 +179,16 @@ Any post-audit tampering with amounts, dates, or IDs invalidates all downstream 
 Traditional accounting treats payment gateway balances as liquid cash. In reality, until settled in the bank, funds represent **unsettled accounts receivable (Float)** subject to gateway withholding and refund chargebacks.
 
 ```
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                               TOTAL RECONCILED REVENUE                                 │
-├────────────────────────────────────────┬───────────────────────────────────────────────┤
-│         1. REALIZED BANK CASH          │           2. PENDING GATEWAY FLOAT            │
-│   (Confirmed deposited in bank)        │     (Captured by gateway, in transit)         │
-├────────────────────────────────────────┼───────────────────────────────────────────────┤
-│ • Immediately available for payroll,   │ • Accounts Receivable in transit              │
-│   vendor payouts, and operations       │ • Subject to T+1 / T+2 settlement lag         │
-│ • Net of verified MDR fees & 18% GST   │ • Monitored for aging and SLA breach          │
-└────────────────────────────────────────┴───────────────────────────────────────────────┘
++----------------------------------------------------------------------------------------+
+|                               TOTAL RECONCILED REVENUE                                 |
++----------------------------------------+-----------------------------------------------+
+|         1. REALIZED BANK CASH          |           2. PENDING GATEWAY FLOAT            |
+|   (Confirmed deposited in bank)        |     (Captured by gateway, in transit)         |
++----------------------------------------+-----------------------------------------------+
+| - Immediately available for payroll,   | - Accounts Receivable in transit              |
+|   vendor payouts, and operations       | - Subject to T+1 / T+2 settlement lag         |
+| - Net of verified MDR fees & 18% GST   | - Monitored for aging and SLA breach          |
++----------------------------------------+-----------------------------------------------+
 ```
 
 ---
