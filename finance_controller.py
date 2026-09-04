@@ -342,7 +342,7 @@ class MockLLM:
             return MockResponse(content)
 
 
-ENGINE_MODE = "cloud"  # Supported options: "cloud" (Gemini Exclusive -> Local -> Mock), "local" (Ollama -> Mock), "mock" (Offline)
+ENGINE_MODE = "mock"  # Supported options: "cloud" (Gemini Exclusive -> Local -> Mock), "local" (Ollama -> Mock), "mock" (Offline)
 ACTIVE_ENGINE_DETAILS: List[str] = []
 ENGINE_CALL_COUNTS: Dict[str, int] = {"Cloud": 0, "Local": 0, "MockLLM": 0}
 
@@ -353,7 +353,11 @@ def get_active_engine_name() -> str:
     mock_count = ENGINE_CALL_COUNTS["MockLLM"]
     total = cloud_count + local_count + mock_count
     
-    if ENGINE_MODE in ("cloud", "gemini"):
+    if ENGINE_MODE == "mock":
+        if mock_count > 0:
+            return f"MockLLM (Offline Simulator) [{mock_count} calls]"
+        return "MockLLM (Offline Simulator)"
+    elif ENGINE_MODE in ("cloud", "gemini"):
         if cloud_count > 0:
             return f"Gemini (gemini-flash-latest) [{cloud_count} calls]"
         return "Gemini (gemini-flash-latest)"
@@ -362,10 +366,8 @@ def get_active_engine_name() -> str:
         if local_count > 0:
             return f"Ollama ({ollama_model}) [{local_count} calls]"
         return f"Ollama ({ollama_model})"
-    elif ENGINE_MODE == "mock":
-        return "MockLLM (Offline Simulator)"
 
-    return "Gemini (gemini-flash-latest)"
+    return "MockLLM (Offline Simulator)"
 
 
 # =====================================================================

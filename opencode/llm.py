@@ -368,7 +368,7 @@ def _opencode_react_reasoner(prompt: str) -> str:
         )
 
 
-ENGINE_MODE = "cloud"  # Supported options: "cloud" (Gemini/Groq -> Local -> Mock), "local" (Ollama -> Mock), "mock" (Offline)
+ENGINE_MODE = "mock"  # Supported options: "cloud" (Gemini/Groq -> Local -> Mock), "local" (Ollama -> Mock), "mock" (Offline)
 
 def chat(model: str = "google/gemini-3-pro-high", messages: List[Dict[str, str]] = None, **kwargs) -> LLMResponse:
     """

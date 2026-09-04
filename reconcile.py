@@ -145,7 +145,7 @@ class MockLLM:
             return MockResponse(content)
 
 # Initialize LLM wrapper and config
-ENGINE_MODE = "cloud"  # Supported options: "cloud" (Gemini/Groq -> Local -> Mock), "local" (Ollama -> Mock), "mock" (Offline)
+ENGINE_MODE = "mock"  # Supported options: "cloud" (Gemini/Groq -> Local -> Mock), "local" (Ollama -> Mock), "mock" (Offline)
 
 def gemini_reason(prompt):
     """
