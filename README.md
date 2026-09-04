@@ -322,8 +322,8 @@ $$\text{Resolution Rate} = \frac{\text{Deterministic Matches} + \text{AI Matches
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/nilaksh200/Ai-finance-controller-.git
-cd Ai-finance-controller-
+git clone https://github.com/nilaksh200/Ai-finance-controller.git
+cd Ai-finance-controller
 ```
 
 ### 2. Create Virtual Environment & Install Dependencies
