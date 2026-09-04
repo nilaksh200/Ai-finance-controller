@@ -2,9 +2,14 @@
 > **Enterprise-Grade 3-Way Payment Reconciliation, ReAct Cognitive Anomaly Resolution, Cryptographic Ledger Audit Chaining, and Forward Liquidity Forecasting.**
 
 ![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue?style=for-the-badge&logo=python)
-![Streamlit](https://img.shields.io/badge/Streamlit-1.35%2B-FF4B4B?style=for-the-badge&logo=streamlit)
-![AI Reasoning](https://img.shields.io/badge/AI%20Engine-Google%20Gemini-4285F4?style=for-the-badge&logo=google)
+[![Streamlit Cloud](https://img.shields.io/badge/Live%20Demo-Streamlit%20Cloud-FF4B4B?style=for-the-badge&logo=streamlit)](https://ai-finance-controller-nilaksh.streamlit.app/)
+![AI Reasoning](https://img.shields.io/badge/AI%20Engine-MockLLM%20%7C%20Gemini-4285F4?style=for-the-badge&logo=google)
 ![CI Build](https://img.shields.io/badge/CI-Automated%20Audit%20Passing-success?style=for-the-badge&logo=githubactions)
+
+---
+
+### Live Hosted Demo
+**Access the live public dashboard here**: [https://ai-finance-controller-nilaksh.streamlit.app/](https://ai-finance-controller-nilaksh.streamlit.app/)
 
 ---
 
