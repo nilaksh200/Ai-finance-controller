@@ -58,3 +58,5 @@ htmlcov/
 # --- Operational Exports ---
 controller_audit_tickets.csv
 *.log
+
+.vercel

@@ -330,6 +330,17 @@ def export_audit_csv(payload: Dict[str, Any] = Body(...)):
     )
 
 
+@app.get("/api")
+@app.get("/api/")
+@app.get("/api/index.py")
+def api_root():
+    return {
+        "status": "operational",
+        "message": "Autonomous AI Finance Controller API Operational",
+        "active_engine": get_active_engine_name()
+    }
+
+
 # ---------------------------------------------------------------------------
 # STATIC FRONTEND SERVING (For local development parity with Vercel)
 # ---------------------------------------------------------------------------
@@ -346,7 +357,9 @@ def serve_index():
 
 @app.get("/{file_path:path}")
 def serve_static(file_path: str):
-    # Only serve if not an API route and file exists in public/
+    # Never intercept API routes
+    if file_path.startswith("api") or file_path.startswith("/api"):
+        raise HTTPException(status_code=404, detail="API route not found")
     target_path = os.path.join(PUBLIC_DIR, file_path)
     if os.path.isfile(target_path):
         return FileResponse(target_path)
