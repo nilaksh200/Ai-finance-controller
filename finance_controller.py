@@ -894,12 +894,23 @@ def generate_synthetic_data(
                 "expected_decision": expected_decision
             })
 
-    # Helper function to write CSVs
+    # Helper function to write CSVs safely (with fallback for read-only serverless filesystems)
     def write_csv(filename: str, fieldnames: List[str], data: List[Dict[str, Any]]) -> None:
-        with open(filename, "w", newline="", encoding="utf-8") as f:
-            writer = csv.DictWriter(f, fieldnames=fieldnames)
-            writer.writeheader()
-            writer.writerows(data)
+        try:
+            with open(filename, "w", newline="", encoding="utf-8") as f:
+                writer = csv.DictWriter(f, fieldnames=fieldnames)
+                writer.writeheader()
+                writer.writerows(data)
+        except OSError:
+            # Fallback for serverless environments (e.g. Vercel) where root filesystem is read-only
+            try:
+                tmp_file = os.path.join(tempfile.gettempdir(), filename)
+                with open(tmp_file, "w", newline="", encoding="utf-8") as f:
+                    writer = csv.DictWriter(f, fieldnames=fieldnames)
+                    writer.writeheader()
+                    writer.writerows(data)
+            except OSError:
+                pass
 
     write_csv("orders.csv", ["OrderID", "Date", "Amount", "Status", "DiscountAmount"], orders)
     write_csv("gateway.csv", ["PaymentID", "OrderID", "Amount", "Fee", "GST", "SettlementAmount", "Date", "Status"], gateway)
@@ -910,7 +921,11 @@ def generate_synthetic_data(
         "total_orders": len(orders),
         "normal_orders": num_normal,
         "mismatches_injected": num_mismatches,
-        "ground_truth_map": {row["order_id"]: row for row in ground_truth}
+        "ground_truth_map": {row["order_id"]: row for row in ground_truth},
+        "orders": orders,
+        "gateway": gateway,
+        "bank": bank,
+        "ground_truth": ground_truth,
     }
 
 

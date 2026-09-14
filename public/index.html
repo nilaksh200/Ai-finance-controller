@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Autonomous Payment Reconciliation & Cash Controller</title>
+  <meta name="description" content="Enterprise-Grade 3-Way Payment Reconciliation, ReAct Cognitive Anomaly Resolution, Cryptographic Ledger Audit Chaining, and Forward Liquidity Forecasting." />
+  
+  <!-- Google Fonts: Inter, Calistoga, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Calistoga&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Toast Notification Center -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- App Wrapper -->
+  <div class="app-container">
+
+    <!-- Hero Header -->
+    <header class="hero-header" id="hero-header">
+      <div class="header-left">
+        <div class="section-badge">
+          <span class="badge-dot"></span>
+          <span class="badge-text">Enterprise Edition</span>
+        </div>
+        <h1 class="hero-title">
+          Autonomous Payment <span class="title-accent">Reconciliation</span> &amp; Cash Controller
+        </h1>
+        <p class="hero-subtitle">
+          3-Way Ledger Audit &bull; ReAct Cognitive Detective &bull; Dual-Track Treasury &bull; 7-Day Liquidity Forecast
+        </p>
+      </div>
+
+      <div class="header-right">
+        <div class="status-box">
+          <span class="status-label">Active AI Engine</span>
+          <div class="status-value-pill" id="active-engine-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <span id="engine-name-text">Gemini / MockLLM</span>
+          </div>
+        </div>
+
+        <div class="status-box">
+          <span class="status-label">System Status</span>
+          <div class="status-live-pill">
+            <span class="live-pulse-dot"></span>
+            <span class="live-status-text">Operational</span>
+          </div>
+        </div>
+
+        <div class="status-box">
+          <span class="status-label">Runtime Platform</span>
+          <div class="platform-pill">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M24 22.525H0L12 1.475l12 21.05z"/></svg>
+            <span>Vercel Serverless</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Action Toolbar & Ingestion Panel -->
+    <section class="toolbar-section">
+      <div class="toolbar-card">
+        <div class="toolbar-actions">
+          <button id="btn-run-pipeline" class="btn btn-primary" onclick="handleRunPipeline()">
+            <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <span id="btn-run-text">Run Full Reconciliation &amp; Audit</span>
+          </button>
+
+          <button id="btn-generate-dataset" class="btn btn-secondary" onclick="handleGenerateDataset()">
+            <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+            <span>Generate Fresh Random Dataset</span>
+          </button>
+
+          <div class="balance-input-group">
+            <label for="opening-balance-input">Opening Balance (INR):</label>
+            <div class="input-prefix-wrapper">
+              <span class="currency-prefix">₹</span>
+              <input type="number" id="opening-balance-input" value="500000" step="10000" min="0" />
+            </div>
+          </div>
+
+          <button id="btn-toggle-custom" class="btn btn-ghost" onclick="toggleCustomUploadPanel()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <span id="toggle-custom-text">Custom CSV Ingestion (Optional)</span>
+          </button>
+        </div>
+
+        <!-- Custom Upload Accordion Drawer -->
+        <div id="custom-upload-panel" class="custom-upload-panel hidden">
+          <div class="custom-panel-header">
+            <h4>Upload Custom 3-Way Ledgers (CSV)</h4>
+            <span class="custom-panel-desc">Supply your own Orders, Gateway, and Bank statement records. The engine normalizes column names automatically.</span>
+          </div>
+          <div class="dropzones-grid">
+            <div class="dropzone" id="dz-orders">
+              <div class="dz-icon">📦</div>
+              <div class="dz-label">1. Orders CSV</div>
+              <input type="file" id="file-orders" accept=".csv" onchange="handleFileSelected('orders', this)" />
+              <div class="dz-filename" id="name-orders">Drop or browse CSV</div>
+            </div>
+            <div class="dropzone" id="dz-gateway">
+              <div class="dz-icon">💳</div>
+              <div class="dz-label">2. Gateway CSV</div>
+              <input type="file" id="file-gateway" accept=".csv" onchange="handleFileSelected('gateway', this)" />
+              <div class="dz-filename" id="name-gateway">Drop or browse CSV</div>
+            </div>
+            <div class="dropzone" id="dz-bank">
+              <div class="dz-icon">🏦</div>
+              <div class="dz-label">3. Bank Statement CSV</div>
+              <input type="file" id="file-bank" accept=".csv" onchange="handleFileSelected('bank', this)" />
+              <div class="dz-filename" id="name-bank">Drop or browse CSV</div>
+            </div>
+            <div class="dropzone" id="dz-gt">
+              <div class="dz-icon">🎯</div>
+              <div class="dz-label">Optional: Ground Truth</div>
+              <input type="file" id="file-gt" accept=".csv" onchange="handleFileSelected('gt', this)" />
+              <div class="dz-filename" id="name-gt">Drop or browse CSV</div>
+            </div>
+          </div>
+          <div class="custom-panel-footer">
+            <button class="btn btn-sm btn-ghost" onclick="clearCustomFiles()">Clear Uploaded Files</button>
+            <span id="custom-files-status" class="files-status-text">Using Demo Dataset (200 Orders)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Executive Scorecard (4 Real-Time KPI Cards) -->
+    <section class="kpi-section" id="kpi-section">
+      <div class="kpi-section-label">
+        <span class="kpi-dot"></span>
+        <span class="kpi-label-text">Continuous Audit Scorecard &amp; Operational Float</span>
+      </div>
+
+      <div class="kpi-grid">
+        <!-- KPI 1 -->
+        <div class="metric-card">
+          <div class="metric-label">
+            <span>Transaction Volume</span>
+            <span class="pill pill-blue">3-Way Ingest</span>
+          </div>
+          <div class="metric-value" id="kpi-volume">-- <span class="metric-unit">Txns</span></div>
+          <div class="metric-subtext">Total Gross: <span class="blue" id="kpi-gross">--</span></div>
+        </div>
+
+        <!-- KPI 2 -->
+        <div class="metric-card">
+          <div class="metric-label">
+            <span>Fast-Path Deterministic</span>
+            <span class="pill pill-green">&lt; 50ms SLA</span>
+          </div>
+          <div class="metric-value" id="kpi-det-pct">--%</div>
+          <div class="metric-subtext"><span class="green" id="kpi-det-count">-- orders</span> auto-reconciled instantly</div>
+        </div>
+
+        <!-- KPI 3 -->
+        <div class="metric-card">
+          <div class="metric-label">
+            <span>Cognitive ReAct Agent</span>
+            <span class="pill pill-blue">Verified</span>
+          </div>
+          <div class="metric-value" id="kpi-ai-count">-- <span class="metric-unit">Anomalies</span></div>
+          <div class="metric-subtext"><span class="green">100% Verified</span> within math guardrails</div>
+        </div>
+
+        <!-- KPI 4 -->
+        <div class="metric-card">
+          <div class="metric-label">
+            <span>Quarantined Float</span>
+            <span class="pill pill-red" id="kpi-exc-badge">-- Exceptions</span>
+          </div>
+          <div class="metric-value red" id="kpi-variance">--</div>
+          <div class="metric-subtext"><span class="amber">Automated loop closure</span> actioned</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Standby Launchpad State (Shown before first run) -->
+    <section id="standby-launchpad" class="standby-card">
+      <div class="standby-icon">🛡️</div>
+      <h2 class="standby-title">Ready for Autonomous Continuous Audit</h2>
+      <p class="standby-description">
+        The continuous reconciliation controller is loaded in standby mode. Click <strong>Run Full Reconciliation &amp; Audit</strong> above to start the engine, execute the 3-Way Deterministic Matcher, and perform ReAct cognitive anomaly resolution.
+      </p>
+      <div class="standby-feeds">
+        <span class="feed-label">Live Ingestion Feeds:</span>
+        <span class="feed-tag">Orders (OMS)</span>
+        <span class="feed-bullet">&bull;</span>
+        <span class="feed-tag">Payment Gateway (Razorpay)</span>
+        <span class="feed-bullet">&bull;</span>
+        <span class="feed-tag">Core Bank Statement</span>
+      </div>
+      <div style="margin-top:20px;">
+        <button class="btn btn-primary" onclick="handleRunPipeline()">Start Continuous Audit Now</button>
+      </div>
+    </section>
+
+    <!-- Main Results Section (Tabs & Content) -->
+    <main id="results-container" class="results-container hidden">
+
+      <!-- Tab Buttons Navigation -->
+      <nav class="tabs-nav" role="tablist">
+        <button class="tab-btn active" id="tab-btn-recon" role="tab" aria-selected="true" onclick="switchTab('recon')">
+          <span>Autonomous Reconciliation</span>
+          <span class="tab-badge" id="tab-recon-badge">0</span>
+        </button>
+
+        <button class="tab-btn" id="tab-btn-treasury" role="tab" aria-selected="false" onclick="switchTab('treasury')">
+          <span>Cash Position &amp; 7-Day Forecast</span>
+        </button>
+
+        <button class="tab-btn" id="tab-btn-audit" role="tab" aria-selected="false" onclick="switchTab('audit')">
+          <span>Exceptions &amp; Action Tickets</span>
+          <span class="tab-badge tab-badge-red" id="tab-audit-badge">0</span>
+        </button>
+      </nav>
+
+      <!-- =================================================================== -->
+      <!-- TAB 1: AUTONOMOUS RECONCILIATION -->
+      <!-- =================================================================== -->
+      <div id="tab-recon" class="tab-panel active" role="tabpanel">
+        <div class="surface-card">
+          <div class="surface-header">
+            <div>
+              <h3 class="surface-title">Reconciled Transactions Master Ledger</h3>
+              <p class="surface-desc">Click any row to open the slide-in ReAct Agent Inspection Drawer &amp; policy audit trail &rarr;</p>
+            </div>
+
+            <!-- Table Filters -->
+            <div class="table-controls">
+              <div class="search-box">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" id="recon-search-input" placeholder="Search OrderID, PaymentID..." oninput="handleReconFilter()" />
+              </div>
+
+              <select id="recon-layer-filter" class="select-filter" onchange="handleReconFilter()">
+                <option value="ALL">All Layers</option>
+                <option value="Deterministic">Deterministic Fast-Path</option>
+                <option value="AI ReAct">AI ReAct Detective</option>
+              </select>
+
+              <select id="recon-class-filter" class="select-filter" onchange="handleReconFilter()">
+                <option value="ALL">All Classifications</option>
+                <option value="MATCH">Confirmed Match</option>
+                <option value="REFUND">Refund / Return</option>
+                <option value="DISCOUNT">Discount Desync</option>
+                <option value="TIMING">Timing / Settlement Lag</option>
+                <option value="FEE">Fee Variation</option>
+                <option value="EXCEPTION">Exceptions</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Master Table -->
+          <div class="table-responsive">
+            <table class="data-table" id="recon-master-table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Layer</th>
+                  <th>Classification</th>
+                  <th>Order Gross</th>
+                  <th>Gateway Gross</th>
+                  <th>Bank Net</th>
+                  <th>MDR Fee</th>
+                  <th>GST (18%)</th>
+                  <th>Status</th>
+                  <th>Inspection</th>
+                </tr>
+              </thead>
+              <tbody id="recon-table-body">
+                <!-- Populated dynamically by app.js -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination & Count -->
+          <div class="table-footer">
+            <span id="recon-showing-count">Showing 0 of 0 transactions</span>
+            <div class="pagination-controls">
+              <button class="btn btn-xs btn-ghost" id="recon-prev-btn" onclick="paginateRecon(-1)">Previous</button>
+              <span id="recon-page-num" class="page-num">Page 1</span>
+              <button class="btn btn-xs btn-ghost" id="recon-next-btn" onclick="paginateRecon(1)">Next</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- =================================================================== -->
+      <!-- TAB 2: CASH POSITION & 7-DAY PREDICTIVE FORECAST -->
+      <!-- =================================================================== -->
+      <div id="tab-treasury" class="tab-panel" role="tabpanel">
+        <div class="treasury-grid">
+
+          <!-- Cash Position Statement -->
+          <div class="surface-card">
+            <h3 class="surface-title">Dual-Track Cash Position Statement</h3>
+            <p class="surface-desc">Direct reconciliation of bank deposits, processed deductions, and floating settlements.</p>
+
+            <table class="fin-table" id="cash-statement-table">
+              <tbody>
+                <tr>
+                  <td class="fin-label-bold">Opening Available Balance</td>
+                  <td class="fin-val fin-bold" id="fin-opening-bal">₹0.00</td>
+                </tr>
+                <tr>
+                  <td class="fin-sublabel green">&bull; Confirmed Inflows (Deterministic)</td>
+                  <td class="fin-val green" id="fin-inf-det">+₹0.00</td>
+                </tr>
+                <tr>
+                  <td class="fin-sublabel blue">&bull; Confirmed Inflows (AI-Resolved)</td>
+                  <td class="fin-val blue" id="fin-inf-ai">+₹0.00</td>
+                </tr>
+                <tr>
+                  <td class="fin-sublabel muted">&bull; In-Transit / Pending Float (T+2)</td>
+                  <td class="fin-val muted" id="fin-inf-float">₹0.00</td>
+                </tr>
+                <tr class="total-row">
+                  <td class="fin-label-bold">Total Realized Cash Inflows</td>
+                  <td class="fin-val green fin-bold" id="fin-tot-inflows">+₹0.00</td>
+                </tr>
+                <tr>
+                  <td class="fin-sublabel muted">&bull; Gateway MDR Fees (2%)</td>
+                  <td class="fin-val muted" id="fin-outf-fee">-₹0.00</td>
+                </tr>
+                <tr>
+                  <td class="fin-sublabel muted">&bull; GST on Fees (18% ITC Tracked)</td>
+                  <td class="fin-val muted" id="fin-outf-gst">-₹0.00</td>
+                </tr>
+                <tr>
+                  <td class="fin-sublabel red">&bull; Customer Refunds Disbursed</td>
+                  <td class="fin-val red" id="fin-outf-refunds">-₹0.00</td>
+                </tr>
+                <tr class="total-row">
+                  <td class="fin-label-bold">Total Realized Cash Outflows</td>
+                  <td class="fin-val red fin-bold" id="fin-tot-outflows">-₹0.00</td>
+                </tr>
+                <tr class="closing-row">
+                  <td class="fin-closing-label">Closing Reconciled Bank Balance</td>
+                  <td class="fin-closing-val" id="fin-closing-bal">₹0.00</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Predictive 7-Day Forecast Chart -->
+          <div class="surface-card">
+            <div class="chart-header">
+              <div>
+                <h3 class="surface-title">Predictive 7-Day Liquidity Trajectory</h3>
+                <p class="surface-desc">Forward cash runway accounting for T+2 float release and velocity decay.</p>
+              </div>
+              <div class="chart-legend">
+                <span class="legend-item"><span class="legend-dot dot-blue"></span> Projected Runway</span>
+                <span class="legend-item"><span class="legend-dot dot-bar"></span> Daily Inflow</span>
+                <span class="legend-item"><span class="legend-dot dot-band"></span> Confidence Band</span>
+              </div>
+            </div>
+
+            <!-- Custom Interactive SVG Chart Canvas -->
+            <div class="chart-wrapper" id="forecast-chart-container">
+              <!-- Rendered dynamically by app.js -->
+            </div>
+
+            <!-- Forecast Summary Pills -->
+            <div class="forecast-metrics-strip" id="forecast-summary-strip">
+              <div class="f-metric">
+                <span class="f-label">7-Day Net Liquidity Delta</span>
+                <span class="f-val green" id="f-net-delta">+₹0.00</span>
+              </div>
+              <div class="f-metric">
+                <span class="f-label">Pending Float Released</span>
+                <span class="f-val blue" id="f-float-released">₹0.00</span>
+              </div>
+              <div class="f-metric">
+                <span class="f-label">Projected Day 7 Runway</span>
+                <span class="f-val" id="f-day7-runway">₹0.00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- =================================================================== -->
+      <!-- TAB 3: EXCEPTIONS & OPERATIONAL ACTION TICKETS -->
+      <!-- =================================================================== -->
+      <div id="tab-audit" class="tab-panel" role="tabpanel">
+        <div class="surface-card">
+          <div class="surface-header">
+            <div>
+              <h3 class="surface-title">Autonomous Loop Closure &amp; Closed-Loop ERP Journal Dispatch</h3>
+              <p class="surface-desc">Every ledger variance is classified into an operational ticket with assigned ownership, escalation hierarchy, and automated double-entry General Ledger (ERP) write-back.</p>
+            </div>
+          </div>
+
+          <!-- Ticket Urgency Metric Strip -->
+          <div class="ticket-stats-strip">
+            <div class="stat-pill stat-high">
+              <span class="stat-tag">High Urgency</span>
+              <span class="stat-num" id="stat-high-count">0</span>
+            </div>
+            <div class="stat-pill stat-med">
+              <span class="stat-tag">Medium Urgency</span>
+              <span class="stat-num" id="stat-med-count">0</span>
+            </div>
+            <div class="stat-pill stat-low">
+              <span class="stat-tag">Low Urgency</span>
+              <span class="stat-num" id="stat-low-count">0</span>
+            </div>
+            <div class="stat-pill stat-erp">
+              <span class="stat-tag">Dispatched to ERP</span>
+              <span class="stat-num" id="stat-erp-count">0 <span class="stat-total" id="stat-erp-total">/ 0</span></span>
+            </div>
+            <div class="stat-pill stat-all">
+              <span class="stat-tag">Total Tickets</span>
+              <span class="stat-num" id="stat-all-count">0</span>
+            </div>
+          </div>
+
+          <!-- Ticket Filter & Batch Actions Bar -->
+          <div class="ticket-action-bar">
+            <button class="btn btn-primary" id="btn-batch-erp" onclick="handleBatchDispatchERP()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              <span>Dispatch All Action Tickets to General Ledger (ERP)</span>
+            </button>
+
+            <div class="ticket-filters">
+              <select id="ticket-urgency-filter" class="select-filter" onchange="handleTicketFilter()">
+                <option value="ALL">All Urgencies</option>
+                <option value="HIGH">HIGH Urgency</option>
+                <option value="MEDIUM">MEDIUM Urgency</option>
+                <option value="LOW">LOW Urgency</option>
+              </select>
+
+              <select id="ticket-erp-filter" class="select-filter" onchange="handleTicketFilter()">
+                <option value="ALL">All ERP Statuses</option>
+                <option value="PENDING">Pending Dispatch</option>
+                <option value="POSTED">Posted to ERP</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Interactive ERP Dispatch Studio List -->
+          <div class="ticket-cards-container" id="ticket-cards-list">
+            <!-- Populated dynamically by app.js -->
+          </div>
+
+          <!-- Consolidated Operational Action Ledger Table -->
+          <div class="consolidated-section">
+            <h4 class="sub-table-title">Consolidated Operational Action Ledger</h4>
+            <div class="table-responsive">
+              <table class="data-table" id="action-summary-table">
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th>Anomaly Type</th>
+                    <th>Prescribed Action</th>
+                    <th>Owner</th>
+                    <th>Urgency</th>
+                    <th>ERP Status</th>
+                    <th>Business Justification</th>
+                  </tr>
+                </thead>
+                <tbody id="action-table-body">
+                  <!-- Populated dynamically -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Export CSV Button -->
+            <div class="export-bar">
+              <button class="btn btn-secondary" onclick="handleExportCSV()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span>Export Audit Trail &amp; Exception Tickets with ERP Status (CSV)</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- SLIDE-IN AGENT INSPECTION DRAWER -->
+  <!-- ===================================================================== -->
+  <div id="drawer-backdrop" class="drawer-backdrop" onclick="closeAgentDrawer()"></div>
+  <aside id="agent-drawer" class="agent-drawer" aria-hidden="true">
+    <div class="drawer-header">
+      <div>
+        <div class="drawer-pretitle" id="drawer-layer-pretitle">Agent Inspection &bull; Deterministic Fast-Path</div>
+        <h2 class="drawer-order-id" id="drawer-order-id">ORD1001</h2>
+        <div class="drawer-badges" id="drawer-badges-container">
+          <span class="pill pill-green" id="drawer-status-badge">CONFIRMED</span>
+          <span class="pill pill-blue" id="drawer-class-badge">MATCH</span>
+        </div>
+      </div>
+      <button class="drawer-close-btn" onclick="closeAgentDrawer()" title="Close (Esc)">&times;</button>
+    </div>
+
+    <div class="drawer-body">
+      <!-- Financial Breakdown -->
+      <div class="drawer-section-label">Financial Breakdown</div>
+      <div class="drawer-amt-grid">
+        <div class="drawer-amt-card">
+          <span class="amt-lbl">Order Gross</span>
+          <span class="amt-val" id="d-amt-order">₹0.00</span>
+        </div>
+        <div class="drawer-amt-card">
+          <span class="amt-lbl">Gateway Capture</span>
+          <span class="amt-val blue" id="d-amt-gateway">₹0.00</span>
+        </div>
+        <div class="drawer-amt-card">
+          <span class="amt-lbl">Bank Deposit</span>
+          <span class="amt-val green" id="d-amt-bank">₹0.00</span>
+        </div>
+        <div class="drawer-amt-card">
+          <span class="amt-lbl">MDR Fee + GST</span>
+          <span class="amt-val amber" id="d-amt-fees">₹0.00</span>
+        </div>
+      </div>
+
+      <!-- Cognitive Reasoning Timeline -->
+      <div class="drawer-section-label">Cognitive Reasoning Trace</div>
+      <div class="drawer-timeline" id="drawer-timeline">
+        <div class="tl-step tl-think">
+          <span class="step-badge">THINK</span>
+          <p id="tl-think-text">Analyzing transaction across OMS, Gateway, and Bank records...</p>
+        </div>
+        <div class="tl-step tl-act">
+          <span class="step-badge">ACT</span>
+          <p id="tl-act-text">Cross-referencing OrderID, Gateway PaymentID, and Bank narration...</p>
+        </div>
+        <div class="tl-step tl-observe">
+          <span class="step-badge">OBSERVE</span>
+          <p id="tl-observe-text">Amounts match perfectly within mathematical delta tolerances.</p>
+        </div>
+        <div class="tl-step tl-decide">
+          <span class="step-badge">DECIDE</span>
+          <p id="tl-decide-text">Reconciliation status confirmed.</p>
+        </div>
+      </div>
+
+      <!-- Verified Source Documents -->
+      <div class="drawer-section-label">Source Documents Verified</div>
+      <div class="docs-chips" id="drawer-docs-chips">
+        <div class="doc-chip"><span class="chip-key">Order:</span> <span id="chip-order-id">ORD1001</span></div>
+        <div class="doc-chip"><span class="chip-key">Payment:</span> <span id="chip-pay-id">PAY1001</span></div>
+        <div class="doc-chip"><span class="chip-key">Bank Txn:</span> <span id="chip-txn-id">TXN1001</span></div>
+        <div class="doc-chip"><span class="chip-key">GW Status:</span> <span id="chip-gw-status">captured</span></div>
+      </div>
+
+      <!-- Policy Checks -->
+      <div class="drawer-section-label">Policy Checks</div>
+      <div class="policy-box">
+        <div class="policy-row"><span class="check-icon" id="chk-order-gw">✓</span> Order ↔ Gateway Amount Cross-Reference</div>
+        <div class="policy-row"><span class="check-icon" id="chk-mdr-rate">✓</span> MDR Fee Rate Standard (2.0% ± 0.5%)</div>
+        <div class="policy-row"><span class="check-icon" id="chk-gst-ok">✓</span> GST Compliance (18% on MDR Fee)</div>
+        <div class="policy-row"><span class="check-icon" id="chk-date-proximity">✓</span> Bank Settlement Date Proximity (≤ T+2)</div>
+        <div class="policy-row"><span class="check-icon" id="chk-net-math">✓</span> Net Settlement Math Verification (Δ ≤ ₹0.01)</div>
+      </div>
+
+      <!-- Guardrail Badge -->
+      <div class="guardrail-banner" id="drawer-guardrail-banner">
+        <div class="guardrail-icon">🛡️</div>
+        <div class="guardrail-content">
+          <div class="guardrail-title">Deterministic Math Delta Guardrail Passed</div>
+          <div class="guardrail-sub" id="guardrail-sub-text">Expected Net matches Bank Deposit within ±₹0.01 tolerance. Zero arithmetic hallucination.</div>
+        </div>
+      </div>
+
+      <!-- Exception Alert Box (if applicable) -->
+      <div class="exception-alert-box hidden" id="drawer-exception-box">
+        <div class="exc-title">Operational Exception Detected</div>
+        <div class="exc-desc" id="drawer-exception-desc">This transaction could not be auto-reconciled and has been routed to the Closed-Loop Action Queue.</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Application Logic -->
+  <script src="app.js"></script>
+</body>
+</html>

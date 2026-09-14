@@ -2,14 +2,15 @@
 > **Enterprise-Grade 3-Way Payment Reconciliation, ReAct Cognitive Anomaly Resolution, Cryptographic Ledger Audit Chaining, and Forward Liquidity Forecasting.**
 
 ![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue?style=for-the-badge)
-[![Streamlit Cloud](https://img.shields.io/badge/Live%20Demo-Streamlit%20Cloud-FF4B4B?style=for-the-badge)](https://ai-finance-controller-nilaksh.streamlit.app/)
+[![Vercel Deployment](https://img.shields.io/badge/Hosted%20On-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fnilaksh200%2FAi-finance-controller)
 ![AI Reasoning](https://img.shields.io/badge/AI%20Engine-MockLLM%20%7C%20Gemini-4285F4?style=for-the-badge)
 ![CI Build](https://img.shields.io/badge/CI-Automated%20Audit%20Passing-success?style=for-the-badge)
 
 ---
 
-### Live Hosted Demo
-**Access the live public dashboard here**: [https://ai-finance-controller-nilaksh.streamlit.app/](https://ai-finance-controller-nilaksh.streamlit.app/)
+### Live Hosted Demo (Vercel)
+Deploy and access the live continuous audit dashboard on **Vercel** with sub-50ms deterministic matching, interactive ReAct inspection drawer, and ERP write-back.
 
 ---
 
