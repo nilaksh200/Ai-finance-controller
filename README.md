@@ -2,15 +2,17 @@
 > **Enterprise-Grade 3-Way Payment Reconciliation, ReAct Cognitive Anomaly Resolution, Cryptographic Ledger Audit Chaining, and Forward Liquidity Forecasting.**
 
 ![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue?style=for-the-badge)
-[![Vercel Deployment](https://img.shields.io/badge/Hosted%20On-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com)
+[![Live Demo on Vercel](https://img.shields.io/badge/Live%20Demo-Vercel%20Production-000000?style=for-the-badge&logo=vercel)](https://ai-finance-controller-alpha.vercel.app/)
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fnilaksh200%2FAi-finance-controller)
 ![AI Reasoning](https://img.shields.io/badge/AI%20Engine-MockLLM%20%7C%20Gemini-4285F4?style=for-the-badge)
 ![CI Build](https://img.shields.io/badge/CI-Automated%20Audit%20Passing-success?style=for-the-badge)
 
 ---
 
-### Live Hosted Demo (Vercel)
-Deploy and access the live continuous audit dashboard on **Vercel** with sub-50ms deterministic matching, interactive ReAct inspection drawer, and ERP write-back.
+### Live Hosted Demo
+**Access the live public production application here**: [https://ai-finance-controller-alpha.vercel.app/](https://ai-finance-controller-alpha.vercel.app/)
+
+> Enterprise-grade 3-Way reconciliation running serverless on **Vercel** with sub-35ms deterministic matching, interactive ReAct cognitive inspection drawer, SVG liquidity trajectory forecasting, and closed-loop ERP journal dispatch.
 
 ---
 
@@ -311,14 +313,17 @@ $$\text{Resolution Rate} = \frac{\text{Deterministic Matches} + \text{AI Matches
 
 | File | Responsibilities & Implementations |
 | :--- | :--- |
+| [`api/index.py`](api/index.py) | Vercel serverless FastAPI backend exposing reconciliation, accuracy benchmarks, treasury statements, and ERP dispatch. |
+| [`public/`](public/) | Enterprise web application frontend (`index.html`, `style.css`, `app.js`) with responsive drawer, SVG charts, and ERP studio. |
+| [`vercel.json`](vercel.json) | Vercel deployment configuration mapping serverless functions and CDN static caching. |
 | [`dashboard.py`](dashboard.py) | Streamlit dashboard UI, custom CSS design system, Plotly visualizations, slide-out drawer, and ERP studio. |
 | [`finance_controller.py`](finance_controller.py) | Core engine: 5-layer pipeline, Dual-track treasury controller, 7-day liquidity forecaster, ReAct agent, and ERP generator. |
 | [`reconcile.py`](reconcile.py) | Standalone reconciliation module: 3-way matcher, multi-threaded batching, ReAct reasoning, and SHA-256 audit chaining. |
 | [`opencode/llm.py`](opencode/llm.py) | Multi-tier LLM client gateway with SSRF protection and offline heuristic fallback engine. |
+| [`tests/test_api.py`](tests/test_api.py) | Automated test suite for Vercel serverless FastAPI endpoints, ERP dispatch, and CSV exports. |
 | [`tests/test_audit.py`](tests/test_audit.py) | Automated test suite validating reconciliation accuracy, math guardrails, and treasury statements. |
 | [`.github/workflows/ci.yml`](.github/workflows/ci.yml) | GitHub Actions CI workflow executing syntax validation and automated test audits on every push. |
-| [`.streamlit/config.toml`](.streamlit/config.toml) | Streamlit theme configuration and server parameters. |
-| [`requirements.txt`](requirements.txt) | Python dependencies (`streamlit`, `pandas`, `plotly`, `requests`). |
+| [`requirements.txt`](requirements.txt) | Python dependencies (`fastapi`, `uvicorn`, `streamlit`, `pandas`, `plotly`, `requests`). |
 | [`.gitignore`](.gitignore) | Security rule file ensuring API keys in `.env` are never committed to version control. |
 | [`.env.example`](.env.example) | Environment configuration template for API keys. |
 
